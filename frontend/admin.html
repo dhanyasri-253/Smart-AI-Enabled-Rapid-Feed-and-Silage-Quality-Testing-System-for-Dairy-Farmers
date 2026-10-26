@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical & SIH Jury Verification — SmartSilageAI (SIH26111)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top SIH Banner -->
+  <div class="sih-badge-banner">
+    <div><strong>SIH26111:</strong> Smart AI-Enabled Rapid Feed and Silage Quality Testing System</div>
+    <div class="banner-right"><span class="pill-status">Technical & Jury Transparency Dossier</span></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title">SmartSilageAI</span>
+          <span class="brand-sub">Technical Verification</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/sample.html" class="nav-link">Test New Sample</a></li>
+        <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="/history.html" class="nav-link">History</a></li>
+        <li><a href="/admin.html" class="nav-link active">Admin / Jury View</a></li>
+        <li><a href="/docs" class="nav-link" target="_blank">Docs</a></li>
+        <li><a href="/redoc" class="nav-link" target="_blank">ReDoc</a></li>
+        <li id="nav-auth-slot" style="margin-left: 8px;"></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div style="margin-bottom: 20px;">
+      <h1 style="font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+        ⚙️ Technical Architecture & SIH Evaluation Dossier
+      </h1>
+      <p style="font-size: 0.88rem; color: var(--text-muted);">
+        Verification of system integrity, ML integration layer, database connectivity, and scientific basis
+      </p>
+    </div>
+
+    <!-- Official SIH Status Table -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">1. Operational & Scientific Integrity Status</h3>
+        <span class="pill-status" style="background:#fef3c7; color:#92400e;">Mandatory SIH Verification</span>
+      </div>
+
+      <table class="admin-status-table">
+        <tbody>
+          <tr>
+            <td>SIH Problem Statement</td>
+            <td><strong id="tech-problem">SIH26111</strong></td>
+          </tr>
+          <tr>
+            <td>Target Ministry / Domain</td>
+            <td id="tech-ministry">Ministry of Fisheries, Animal Husbandry & Dairying</td>
+          </tr>
+          <tr>
+            <td>Dataset Status</td>
+            <td><span class="status-chip neutral" id="tech-dataset-status">Pending (No fabricated data used)</span></td>
+          </tr>
+          <tr>
+            <td>Model Status</td>
+            <td><span class="status-chip neutral" id="tech-model-status">Not yet trained</span></td>
+          </tr>
+          <tr>
+            <td>Model Version</td>
+            <td id="tech-model-version">N/A</td>
+          </tr>
+          <tr>
+            <td>Scientific Validation Status</td>
+            <td><span class="status-chip warning" id="tech-validation-status">Pending Field & Lab Trials</span></td>
+          </tr>
+          <tr>
+            <td>Database Engine</td>
+            <td id="tech-database">MySQL / SQLite Fallback</td>
+          </tr>
+          <tr>
+            <td>ML Pipeline Preprocessor</td>
+            <td><code id="tech-ml-loader">backend.ml.preprocessing</code></td>
+          </tr>
+          <tr>
+            <td>Inference / Predictor Module</td>
+            <td><code id="tech-ml-predictor">backend.ml.predictor</code></td>
+          </tr>
+          <tr>
+            <td>Target Model Artifact</td>
+            <td><code id="tech-ml-path">models/model.joblib</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Interactive Pipeline Test (Dry-run) -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">2. ML Pipeline Dry-Run Verification</h3>
+          <p class="card-subtitle">Executes end-to-end preprocessing, feature extraction, and heuristic inference</p>
+        </div>
+        <button id="run-test-pipeline-btn" class="btn btn-primary btn-sm">
+          ▶ Run Pipeline Dry-Run Test
+        </button>
+      </div>
+
+      <div id="pipeline-test-result" style="display: none; margin-top: 12px;"></div>
+    </div>
+
+    <!-- Scientific Parameter Matrix -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">3. Scientific Reference Standards (ICAR-NDRI Guidelines)</h3>
+          <p class="card-subtitle">Underlying biological thresholds used by the explainable heuristic engine</p>
+        </div>
+      </div>
+
+      <div class="data-table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Silage / Crop Type</th>
+              <th>Optimal pH</th>
+              <th>Target Moisture</th>
+              <th>Aerobic Temp Limit</th>
+              <th>Crude Protein</th>
+              <th>Primary Spoilage Indicator</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Corn (Maize) Silage</strong></td>
+              <td>3.7 – 4.2</td>
+              <td>60% – 70%</td>
+              <td>&lt; 32°C</td>
+              <td>7.5% – 9.5%</td>
+              <td>pH &gt; 4.8 / Temp &gt; 40°C (Aerobic yeast heating)</td>
+            </tr>
+            <tr>
+              <td><strong>Sorghum (Jowar) Silage</strong></td>
+              <td>3.8 – 4.3</td>
+              <td>62% – 72%</td>
+              <td>&lt; 32°C</td>
+              <td>7.0% – 8.5%</td>
+              <td>pH &gt; 5.0 (High buffering capacity / clostridia)</td>
+            </tr>
+            <tr>
+              <td><strong>Mixed Grass Silage</strong></td>
+              <td>4.2 – 4.8</td>
+              <td>60% – 70%</td>
+              <td>&lt; 32°C</td>
+              <td>8.5% – 11.0%</td>
+              <td>Butyric acid aroma (secondary clostridial fermentation)</td>
+            </tr>
+            <tr>
+              <td><strong>Dry Fodder / Hay</strong></td>
+              <td>N/A (Dry)</td>
+              <td>12% – 18%</td>
+              <td>Ambient</td>
+              <td>Variable</td>
+              <td>Moisture &gt; 20% (Combustion & mold heating)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Scalability & Future Roadmap -->
+    <div class="card">
+      <h3 class="card-title" style="margin-bottom: 12px;">4. SIH Scalability Roadmap</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+        <div style="background:#f8fafc; padding:14px; border-radius:8px;">
+          <strong style="color:var(--primary); display:block; margin-bottom:4px;">1. Multilingual Support</strong>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Localization into Hindi, Gujarati, Tamil, Marathi, and Kannada for grassroot dairy farmers.
+          </p>
+        </div>
+        <div style="background:#f8fafc; padding:14px; border-radius:8px;">
+          <strong style="color:var(--primary); display:block; margin-bottom:4px;">2. IoT Probe Integration</strong>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Low-cost Bluetooth/BLE temperature & moisture spears inserted directly into silage pits.
+          </p>
+        </div>
+        <div style="background:#f8fafc; padding:14px; border-radius:8px;">
+          <strong style="color:var(--primary); display:block; margin-bottom:4px;">3. Computer Vision Mold Defect</strong>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Trained MobileNet-V3 image classifier detecting visual surface mycotoxin mold colonies.
+          </p>
+        </div>
+        <div style="background:#f8fafc; padding:14px; border-radius:8px;">
+          <strong style="color:var(--primary); display:block; margin-bottom:4px;">4. Cooperative Federation Hub</strong>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Centralized portal for dairy unions (e.g. Amul, Nandini, Aavin) to track milk shed fodder health.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-sih-note">
+        <strong>SIH26111: Technical & Evaluation Portal</strong><br>
+        Department of Animal Husbandry & Dairying
+      </div>
+      <div>
+        <a href="/" style="color:#94a3b8; font-size:0.8rem;">Return to Homepage</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

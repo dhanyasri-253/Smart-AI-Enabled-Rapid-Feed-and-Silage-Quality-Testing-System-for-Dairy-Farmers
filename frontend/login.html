@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Login — SmartSilageAI (SIH26111)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top SIH Banner -->
+  <div class="sih-badge-banner">
+    <div><strong>SIH26111:</strong> Rapid Silage & Feed Quality System for Dairy Farmers</div>
+    <div class="banner-right"><span class="pill-status">Farmer Portal</span></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title">SmartSilageAI</span>
+          <span class="brand-sub">Farmer Access</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/sample.html" class="nav-link">Test New Sample</a></li>
+        <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="/history.html" class="nav-link">History</a></li>
+        <li><a href="/login.html" class="nav-link active">Farmer Login</a></li>
+        <li><a href="/register.html" class="nav-link">Register</a></li>
+        <li><a href="/admin.html" class="nav-link">Admin / Jury View</a></li>
+        <li><a href="/docs" class="nav-link" target="_blank">Docs</a></li>
+        <li><a href="/redoc" class="nav-link" target="_blank">ReDoc</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-narrow" style="margin-top: 24px;">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">👨‍🌾 Farmer Login</h2>
+          <p class="card-subtitle">Access your silage testing history, parameter trends, and recommendations</p>
+        </div>
+        <span class="demo-tag">SIH Prototype</span>
+      </div>
+
+      <!-- Quick Demo Login Bar -->
+      <div class="demo-preset-bar">
+        <div class="demo-preset-label">
+          <span>⚡ Fast Evaluation:</span>
+        </div>
+        <button type="button" id="quick-demo-login-btn" class="btn btn-gold btn-sm">
+          👉 One-Click Demo Login (Ramesh Patel)
+        </button>
+      </div>
+
+      <div id="login-alert" class="alert" style="display: none;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="mobile">Mobile Number (Registered with Society/Farm)</label>
+          <input type="text" id="mobile" placeholder="e.g. 9876543210" required autofocus>
+          <span class="help-text">Use 10-digit Indian mobile number</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-block btn-lg">
+            Sign In to Farmer Account
+          </button>
+        </div>
+
+        <div style="margin-top: 18px; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+          Don't have an account yet? 
+          <a href="/register.html" style="font-weight: 600;">Register as a Dairy Farmer</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-sih-note">
+        <strong>SIH26111: Rapid Silage Quality Testing System</strong><br>
+        Department of Animal Husbandry & Dairying
+      </div>
+      <div><a href="/admin.html" style="color:#94a3b8; font-size:0.8rem;">Technical Status</a></div>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Dashboard — SmartSilageAI (SIH26111)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top SIH Problem Statement Header -->
+  <div class="sih-badge-banner">
+    <div><strong>SIH26111:</strong> <span data-i18n="topHeader">Rapid Silage & Feed Quality System for Dairy Farmers</span></div>
+    <div class="banner-right">
+      <button type="button" class="lang-toggle-btn" id="dashboard-lang-btn" onclick="I18N.toggleLanguage()">
+        <span>🇮🇳</span> <span>தமிழ்</span>
+      </button>
+      <span class="pill-status">Farmer Portal</span>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title">SmartSilageAI</span>
+          <span class="brand-sub">Farmer Dashboard</span>
+        </div>
+      </a>
+
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/sample.html" class="nav-link">Test New Sample</a></li>
+        <li><a href="/dashboard.html" class="nav-link active">Dashboard</a></li>
+        <li><a href="/history.html" class="nav-link">History</a></li>
+        <li><a href="/admin.html" class="nav-link">Admin / Jury View</a></li>
+        <li><a href="/docs" class="nav-link" target="_blank">Docs</a></li>
+        <li><a href="/redoc" class="nav-link" target="_blank">ReDoc</a></li>
+        <li id="nav-auth-slot" style="margin-left: 8px;"></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Loading Indicator -->
+    <div id="dash-loading" style="text-align: center; padding: 40px; color: var(--text-muted);">
+      ⏳ Loading your dairy feed metrics...
+    </div>
+
+    <div id="dash-content" style="display: none;">
+      
+      <!-- Welcome Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
+        <div>
+          <h1 style="font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+            Welcome, <span id="dash-farmer-name">Dairy Farmer</span> 👋
+          </h1>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            Manage your feed inventory, track silage fermentation stability, and monitor herd feed safety.
+          </p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <a href="/sample.html" class="btn btn-primary">
+            ➕ New Sample Test
+          </a>
+          <a href="/history.html" class="btn btn-secondary">
+            📋 Full History
+          </a>
+        </div>
+      </div>
+
+      <!-- Mandatory SIH Transparency Banner on Dashboard -->
+      <div class="screening-notice-card" style="margin-bottom: 20px;">
+        <div class="notice-icon">🤖</div>
+        <div class="notice-content">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <h4>Model Operational Status: <span id="dash-model-badge" class="status-chip neutral">Checking...</span></h4>
+            <a href="/admin.html" style="font-size:0.78rem; font-weight:600;">Inspect Technical Details →</a>
+          </div>
+          <p style="margin-top: 4px;">
+            Active screening engine uses published <strong>ICAR-NDRI silage quality benchmarks</strong>. 
+            Supervised ML model integration will activate once real field datasets are validated.
+          </p>
+        </div>
+      </div>
+
+      <!-- Metrics 4-Box Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-icon-green">🧪</div>
+          <div class="metric-info">
+            <h3 id="metric-total">0</h3>
+            <p>Total Samples Tested</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-icon-blue">🌾</div>
+          <div class="metric-info">
+            <h3 id="metric-silage">0</h3>
+            <p>Silage Batches (Corn/Sorghum)</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-icon-amber">🌱</div>
+          <div class="metric-info">
+            <h3 id="metric-feed">0</h3>
+            <p>Fodder & Concentrates</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-icon-red">⚠️</div>
+          <div class="metric-info">
+            <h3 id="metric-attention">0</h3>
+            <p>Requiring Attention / Lab</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Samples Card -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">🕒 Recent Quality Screenings</h3>
+            <p class="card-subtitle">Latest feed and silage batches tested on your farm</p>
+          </div>
+          <a href="/history.html" class="btn btn-secondary btn-sm">View All History</a>
+        </div>
+
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Sample ID</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Field Readings</th>
+                <th>Screening Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="recent-samples-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Practical Farmer Tips Banner -->
+      <div style="background: #f1f5f9; border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--border);">
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #334155; margin-bottom: 6px;">
+          💡 Routine Silage Best Practice: The Squeeze Test
+        </h4>
+        <p style="font-size: 0.84rem; color: #64748b;">
+          Grab a handful of chopped forage and squeeze firmly for 20-30 seconds. 
+          If juice runs freely between fingers, moisture exceeds 75% (risk of seepage and clostridia). 
+          If the ball expands slowly without juice, moisture is optimal (~65-70%). 
+          If the ball springs open immediately, crop is too dry (<60%, risk of mold).
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-sih-note">
+        <strong>SIH26111: Smart AI-Enabled Rapid Silage Quality System</strong><br>
+        Built for dairy farmer ease-of-use and sustainable cattle nutrition.
+      </div>
+      <div>
+        <a href="/admin.html" style="color:#94a3b8; font-size:0.8rem;">Technical Status</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
+

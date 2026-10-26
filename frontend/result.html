@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assessment Report — SmartSilageAI (SIH26111)</title>
+  <meta name="description" content="Silage screening dossier and explainable quality assessment report for dairy farmers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top SIH Banner with Language Toggle -->
+  <div class="sih-badge-banner">
+    <div>
+      <strong>SIH26111:</strong> <span data-i18n="topHeader">Rapid Silage & Feed Quality System for Dairy Farmers</span>
+    </div>
+    <div class="banner-right">
+      <button type="button" class="lang-toggle-btn" id="result-lang-btn" aria-label="Toggle Language between English and Tamil">
+        <span>🇮🇳</span> <span>தமிழ்</span>
+      </button>
+      <span class="pill-status">Official Screening Dossier</span>
+    </div>
+  </div>
+
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title" data-i18n="brandTitle">SmartSilageAI</span>
+          <span class="brand-sub">Quality Report</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link" data-i18n="navHome">🏠 Home</a></li>
+        <li><a href="/sample.html" class="nav-link" data-i18n="navNewTest">🧪 Test Silage</a></li>
+        <li><a href="/dashboard.html" class="nav-link" data-i18n="navDashboard">📊 Dashboard</a></li>
+        <li><a href="/history.html" class="nav-link" data-i18n="navHistory">📋 History</a></li>
+        <li><a href="/admin.html" class="nav-link" data-i18n="navAdmin">⚙️ Admin / Jury</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 1040px; margin: 0 auto; padding: 24px 20px;">
+
+    <!-- Loading / Error States -->
+    <div id="loading-state" style="text-align: center; padding: 40px; color: var(--text-muted);">
+      <div class="spinner" style="margin: 0 auto 12px;"></div>
+      <div>Compiling explainable quality screening dossier...</div>
+    </div>
+    <div id="error-state" style="display: none;"></div>
+
+    <!-- Main Report Body -->
+    <div id="result-content" style="display: none;">
+      
+      <!-- Report Header Card -->
+      <div class="card" style="margin-bottom: 20px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <span class="pill-status" id="res-badge-type" style="background:#e0f2fe; color:#0369a1; margin-bottom:8px;">
+              Preliminary Screening Dossier
+            </span>
+            <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">
+              Sample ID: <span id="res-sample-id">SMP-XXXX</span>
+            </h1>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Crop Type: <strong id="res-sample-type" style="color:var(--text-main);">--</strong> | 
+              Tested On: <span id="res-sample-date">--</span>
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button onclick="window.print()" class="btn btn-secondary btn-sm" title="Print this report">
+              🖨️ Print / Save Report
+            </button>
+            <a href="/sample.html" class="btn btn-primary btn-sm">
+              ➕ Test Another Sample
+            </a>
+          </div>
+        </div>
+
+        <!-- Sample Photo if Uploaded -->
+        <div id="res-image-box" style="margin-top: 16px; display: none;">
+          <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">
+            Attached Silage Photo
+          </div>
+          <img id="res-sample-img" alt="Silage Sample" style="max-height: 200px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover;">
+        </div>
+
+        <div style="margin-top: 14px; font-size: 0.85rem; color: #475569; background: #f8fafc; padding: 10px 14px; border-radius: 6px;">
+          <strong>Field Notes:</strong> <span id="res-sample-notes">--</span>
+        </div>
+      </div>
+
+      <!-- Non-ML & Prototype Safety Banner -->
+      <div class="prototype-disclaimer-box">
+        <h4 id="res-disclaimer-title">Important Health & Scientific Notice</h4>
+        <p id="res-disclaimer-body">
+          This preliminary guidance is based on validated dairy extension benchmarks (ICAR-NDRI) and observable field indicators. It is NOT an ML-generated FQI prediction or a certified laboratory diagnosis. Visual appearance and smell alone CANNOT establish that silage is completely safe for animal consumption (e.g. microscopic mycotoxins or subclinical bacterial spores cannot be detected by eye or nose alone).
+        </p>
+      </div>
+
+      <!-- Assessment Status Banner -->
+      <div class="assessment-hero-badge">
+        <div>
+          <div style="font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #b45309;">
+            System Classification Basis
+          </div>
+          <div id="res-quality-category" class="assessment-category-title">
+            Prototype — AI model pending validation
+          </div>
+          <div id="res-preliminary-tier" class="assessment-tier tier-acceptable">
+            Evaluating Field Benchmarks...
+          </div>
+          <div style="margin-top: 6px; font-size: 0.8rem; color: #78350f;">
+            <strong>Engine Basis:</strong> <span id="res-confidence">Field Reference Screening (Pre-ML Validation)</span>
+            (<span id="res-model-version">Heuristic-v1.0</span>)
+          </div>
+        </div>
+
+        <div class="score-display-card" id="res-score-card">
+          <div class="score-label" id="res-score-label">Preliminary Index</div>
+          <div id="res-quality-score" class="score-number">--</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);" id="res-score-scale">Scale: 0 to 100</div>
+        </div>
+      </div>
+
+      <!-- Farmer Mode Warning Signs Section (shown if present) -->
+      <div id="res-warning-signs-section" style="display: none; margin-bottom: 24px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px;">
+          🔍 Observed Warning Signs
+        </h3>
+        <div id="res-warning-signs-list" class="warning-signs-list"></div>
+      </div>
+
+      <!-- Explainable Indicators Table (for numerical measurements) -->
+      <div class="card" id="res-indicators-card" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">🔍 Explainable Parameter Breakdown</h3>
+            <p class="card-subtitle">Transparent justification for each observed physical & chemical metric</p>
+          </div>
+        </div>
+
+        <div class="data-table-container">
+          <table class="indicators-table">
+            <thead>
+              <tr>
+                <th>Quality Indicator</th>
+                <th>Measured Value</th>
+                <th>Standard Target</th>
+                <th>Screening Status</th>
+                <th>Scientific Reasoning & Farmer Impact</th>
+              </tr>
+            </thead>
+            <tbody id="indicators-tbody">
+              <!-- Dynamically rendered -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Practical Farmer Recommendations -->
+      <div class="recommendations-box">
+        <h3>🚜 Practical Farmer Recommendations</h3>
+        <p style="font-size: 0.82rem; color: #166534; margin-bottom: 12px;">
+          Immediate agronomic actions for bunker face management, feed allocation, and herd protection:
+        </p>
+        <div id="recommendations-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Certified Laboratory Referral Advisory -->
+      <div id="lab-advisory-box" class="lab-advisory-card">
+        <h3>🧪 Certified Laboratory Referral Guidance</h3>
+        <div id="lab-advisory-text"></div>
+        <div style="margin-top: 10px; font-size: 0.78rem; color: #1e40af; border-top: 1px dashed #bfdbfe; padding-top: 8px;">
+          <strong>Why Rapid Testing Differs:</strong> Rapid preliminary screening assesses physical and sensory preservation indicators (pH, moisture, heating, mould). 
+          Accredited wet-chemistry analysis (NIR, Kjeldahl CP, Van Soest NDF/ADF, ELISA for Aflatoxin B1) provides validated nutritional values needed for exact ration formulation.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-sih-note">
+        <strong>SIH26111: Rapid Silage & Feed Quality System</strong><br>
+        Department of Animal Husbandry & Dairying
+      </div>
+      <div><a href="/admin.html" style="color:#94a3b8; font-size:0.8rem;">Technical Status</a></div>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/result.js"></script>
+</body>
+</html>

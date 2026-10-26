@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Silage Sample — SmartSilageAI (SIH26111)</title>
+  <meta name="description" content="Submit a new silage sample for rapid quality testing. Farmer Mode or Scientific FQI Mode with laboratory inputs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top Informational Bar with Language Switcher -->
+  <div class="sih-badge-banner">
+    <div>
+      <strong>SIH26111:</strong> <span data-i18n="topHeader">Rapid Silage & Feed Quality System for Dairy Farmers</span>
+    </div>
+    <div class="banner-right">
+      <button type="button" class="lang-toggle-btn" id="sample-lang-btn" aria-label="Toggle Language between English and Tamil">
+        <span>🇮🇳</span> <span>தமிழ்</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title" data-i18n="brandTitle">SmartSilageAI</span>
+          <span class="brand-sub" data-i18n="brandSub">Silage Quality Testing (SIH26111)</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link" data-i18n="navHome">🏠 Home</a></li>
+        <li><a href="/sample.html" class="nav-link active" data-i18n="navNewTest">🧪 Test Silage</a></li>
+        <li><a href="/dashboard.html" class="nav-link" data-i18n="navDashboard">📊 Dashboard</a></li>
+        <li><a href="/history.html" class="nav-link" data-i18n="navHistory">📋 History</a></li>
+        <li><a href="/login.html" class="nav-link" data-i18n="navLogin">👨‍🌾 Farmer Login</a></li>
+        <li><a href="/register.html" class="nav-link" data-i18n="navRegister">📝 Register</a></li>
+        <li><a href="/admin.html" class="nav-link" data-i18n="navAdmin">⚙️ Admin / Jury</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 1040px; margin: 0 auto; padding: 24px 20px;">
+
+    <!-- Hero Banner -->
+    <header class="card" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 60%, #047857 100%); color: white; border-radius: 18px; padding: 32px 36px; margin-bottom: 24px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;">
+      <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem; font-weight: 700; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.25);">
+        <span>🌱</span>
+        <span data-i18n="heroBadge">Dairy Forage Decision Support</span>
+      </div>
+      <h1 style="font-family: 'Outfit', sans-serif; font-size: 2.3rem; font-weight: 800; line-height: 1.2; margin-bottom: 10px;" data-i18n="navNewTest">
+        🧪 Test Silage Sample
+      </h1>
+      <p style="font-size: 1.05rem; color: #dcfce7; max-width: 720px; line-height: 1.5;" data-i18n="heroSubtitle">
+        Fast, transparent feed and silage quality screening designed for Indian dairy farmers. Choose your testing mode below:
+      </p>
+    </header>
+
+    <!-- Two User Path Mode Switcher -->
+    <div class="mode-tabs-container">
+      <!-- Mode 1 Card: Farmer Mode -->
+      <div class="mode-tab-card active" id="tab-mode-farmer" role="button" tabindex="0">
+        <span class="mode-tab-badge farmer" data-i18n="farmerModeBadge">Simple Everyday Language • No Chemistry Needed</span>
+        <div class="mode-tab-title">
+          <span>👨‍🌾</span>
+          <span data-i18n="tabFarmer">Farmer Mode (No Lab Report)</span>
+        </div>
+        <p class="mode-tab-desc" data-i18n="farmerModeDesc">
+          No laboratory report required. Answer everyday questions about your crop, harvest, storage, and silage appearance to receive immediate, practical feeding and storage guidance.
+        </p>
+      </div>
+
+      <!-- Mode 2 Card: Scientific FQI Prediction Mode -->
+      <div class="mode-tab-card" id="tab-mode-scientific" role="button" tabindex="0">
+        <span class="mode-tab-badge scientific" data-i18n="scientificModeBadge">For Lab Analysts & Field Officers</span>
+        <div class="mode-tab-title">
+          <span>🔬</span>
+          <span data-i18n="tabScientific">Scientific FQI Prediction Mode</span>
+        </div>
+        <p class="mode-tab-desc" data-i18n="scientificModeDesc">
+          Evaluates the 11-feature research Random Forest regression pipeline. Requires verified laboratory proximate measurements (DM, CP, Ash, WSC, Starch) and agronomic trial records.
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SECTION A: FARMER MODE GUIDED WIZARD (NO LAB REPORT REQUIRED)  -->
+    <!-- ============================================================== -->
+    <section id="farmer-mode-section" class="card" style="padding: 32px; margin-bottom: 28px;">
+      
+      <!-- Wizard Progress Header -->
+      <div style="margin-bottom: 24px; border-bottom: 2px solid #f1f5f9; padding-bottom: 14px;">
+        <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+          <span>📋</span> <span data-i18n="farmerModeTitle">Farmer Mode — Guided On-Farm Assessment</span>
+        </h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;" data-i18n="farmerModeDesc">
+          No laboratory report required. Answer everyday questions about your crop, harvest, storage, and silage appearance to receive immediate, practical feeding and storage guidance.
+        </p>
+      </div>
+
+      <!-- Progress Indicators -->
+      <div class="wizard-progress">
+        <div class="wizard-progress-bar" id="wizard-progress-bar" style="width: 0%;"></div>
+        
+        <button type="button" class="wizard-step active" data-step="1">
+          <div class="wizard-step-circle">1</div>
+          <div class="wizard-step-label" data-i18n="step1Title">1. Crop & Harvest</div>
+        </button>
+
+        <button type="button" class="wizard-step" data-step="2">
+          <div class="wizard-step-circle">2</div>
+          <div class="wizard-step-label" data-i18n="step2Title">2. Storage & Inoculant</div>
+        </button>
+
+        <button type="button" class="wizard-step" data-step="3">
+          <div class="wizard-step-circle">3</div>
+          <div class="wizard-step-label" data-i18n="step3Title">3. Appearance & Smell</div>
+        </button>
+
+        <button type="button" class="wizard-step" data-step="4">
+          <div class="wizard-step-circle">4</div>
+          <div class="wizard-step-label" data-i18n="step4Title">4. Lab Check & Notes</div>
+        </button>
+      </div>
+
+      <!-- Multi-Step Form -->
+      <form id="farmer-wizard-form" novalidate>
+        
+        <!-- STEP 1: CROP & HARVEST -->
+        <div class="wizard-step-panel" data-step="1" style="display: block;">
+          
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>🌾</span> <span data-i18n="qCrop">Which crop was used for silage?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qCropHint">Select the primary fodder plant harvested for ensiling.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_crop" value="Corn / Maize" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optCorn">🌽 Corn / Maize</div>
+                  <div class="option-tile-sub">High energy, high starch fodder</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_crop" value="Sorghum / Jowar" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optSorghum">🌾 Sorghum / Jowar</div>
+                  <div class="option-tile-sub">Drought-tolerant sweet sorghum</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_crop" value="Hybrid Napier / Green Grass" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optNapier">🌱 Hybrid Napier / Green Grass</div>
+                  <div class="option-tile-sub">Perennial multi-cut fodder grass</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_crop" value="Mixed Forage / Legume" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optMixed">🌿 Mixed Forage / Legume</div>
+                  <div class="option-tile-sub">Cowpea, berseem, or mixed grass</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_crop" value="Other / Unknown" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optOtherCrop">❓ Other / Unknown</div>
+                  <div class="option-tile-sub">Other fodder or unsure</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>📅</span> <span data-i18n="qHarvestTiming">When was the crop harvested?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qHarvestTimingHint">Grain maturity at harvest directly impacts silage starch and moisture.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_harvest" value="Recommended mid-milk line (50% grain dent, optimal moisture)" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optMidHarvest">Recommended mid-milk line (50% grain dent, optimal moisture)</div>
+                  <div class="option-tile-sub">~32%–35% dry matter; optimal starch & preservation</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_harvest" value="Early harvest (very watery / milky grain, high seepage)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optEarlyHarvest">Early harvest (very watery / milky grain, high seepage)</div>
+                  <div class="option-tile-sub">&lt;28% dry matter; risk of effluent seepage & clostridia</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_harvest" value="Late harvest (hard dry grain, dry brown stalks)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optLateHarvest">Late harvest (hard dry grain, dry brown stalks)</div>
+                  <div class="option-tile-sub">&gt;38% dry matter; hard to pack tightly, trapped air</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_harvest" value="Unknown" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optUnknownMaturity">I don't know</div>
+                  <div class="option-tile-sub">Harvest date or stage was not recorded</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>⏱️</span> <span data-i18n="qDelay">How long after cutting was it sealed?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qDelayHint">Prolonged air exposure before sealing burns sugar and causes heating.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_delay" value="Sealed quickly (within 0–4 hours of chopping)" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optDelayFast">Sealed quickly (within 0–4 hours of chopping)</div>
+                  <div class="option-tile-sub">Optimal; minimizes aerobic sugar loss</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_delay" value="Same day packing (4–6 hours delay)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optDelayMed">Same day packing (4–6 hours delay)</div>
+                  <div class="option-tile-sub">Moderate delay; minor aerobic respiration</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_delay" value="Delayed overnight / next day (>20 hours delay)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optDelayLong">Delayed overnight / next day (&gt;20 hours delay)</div>
+                  <div class="option-tile-sub">Significant sugar burn, yeast proliferation, heating</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_delay" value="Unknown" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optDelayUnknown">I don't know</div>
+                  <div class="option-tile-sub">Packing timeline was not tracked</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- STEP 2: STORAGE & INOCULANTS -->
+        <div class="wizard-step-panel" data-step="2" style="display: none;">
+          
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>🏗️</span> <span data-i18n="qStorage">Which storage method was used?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qStorageHint">The containment structure influences air exclusion and compaction.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_storage" value="Silage Pit / Bunker Silo" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optStorageBunker">Silage Pit / Bunker Silo</div>
+                  <div class="option-tile-sub">Concrete walls or excavated ground trench</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_storage" value="Silage Bags / Tube Bags" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optStorageBags">Silage Bags / Tube Bags</div>
+                  <div class="option-tile-sub">Heavy polythene silage bags (50kg–500kg)</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_storage" value="Drums / Barrels / Buckets" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optStorageDrums">Drums / Barrels / Buckets</div>
+                  <div class="option-tile-sub">Plastic air-sealed drums or small containers</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_storage" value="Open Ground Clamp / Stack" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optStorageStack">Open Ground Clamp / Stack</div>
+                  <div class="option-tile-sub">Unwalled pile on soil covered by plastic sheet</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_storage" value="Unknown" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optStorageUnknown">I don't know</div>
+                  <div class="option-tile-sub">Storage method unrecorded</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>🧪</span> <span data-i18n="qInoculant">Was an inoculant / biological additive used?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qInoculantHint">Lactic acid bacterial cultures accelerate acidification.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_inoculant" value="No inoculant used / None added" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optInocNone">No inoculant used / None added</div>
+                  <div class="option-tile-sub">Natural epiphytic bacteria only</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_inoculant" value="Yes, biological bacterial culture (homo/heterofermentative)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optInocBacterial">Yes, biological bacterial culture (homo/heterofermentative)</div>
+                  <div class="option-tile-sub">L. plantarum, L. buchneri inoculant spray</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_inoculant" value="Yes, molasses / salt / mineral blend" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optInocMolasses">Yes, molasses / salt / mineral blend</div>
+                  <div class="option-tile-sub">Molasses added for sugar stimulation or salt/urea</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_inoculant" value="Unknown" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optInocUnknown">I don't know</div>
+                  <div class="option-tile-sub">Additives not recorded</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- STEP 3: APPEARANCE & SMELL -->
+        <div class="wizard-step-panel" data-step="3" style="display: none;">
+          
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>🦠</span> <span data-i18n="qMould">Is there visible mould on the silage?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qMouldHint">Mould patches indicate air leaks and possible dangerous mycotoxins.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_mould" value="No mould visible / Clean forage" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optMouldNone">No mould visible / Clean forage</div>
+                  <div class="option-tile-sub">Clean surface, no fungal mycelium patches</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_mould" value="Surface layer mould only (top 2–5 cm white crust)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optMouldSurface">Surface layer mould only (top 2–5 cm white crust)</div>
+                  <div class="option-tile-sub">White yeast crust along plastic edges; interior clean</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_mould" value="Extensive mould / deep pockets (green, black, or pink patches)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optMouldDeep">Extensive mould / deep pockets (green, black, or pink patches)</div>
+                  <div class="option-tile-sub">High mycotoxin risk; toxic fungi present</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_mould" value="Unknown" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optMouldUnknown">I don't know</div>
+                  <div class="option-tile-sub">Cannot inspect face clearly</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>🎨</span> <span data-i18n="qColor">What is the colour of the silage?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qColorHint">Healthy silage retains green/golden hues; dark brown indicates heat damage.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_color" value="Healthy olive green to golden/light brown" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optColorNormal">Healthy olive green to golden/light brown</div>
+                  <div class="option-tile-sub">Desired natural preservation colour</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_color" value="Dark brown / caramelized (sweet tobacco/burnt bread smell)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optColorCaramel">Dark brown / caramelized (sweet tobacco/burnt bread smell)</div>
+                  <div class="option-tile-sub">Heat damaged (Maillard reaction); protein digestibility reduced</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_color" value="Black / slimy / wet dark (rotted)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optColorBlack">Black / slimy / wet dark (rotted)</div>
+                  <div class="option-tile-sub">Putrefied, toxic, completely spoiled</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_color" value="Pale / bleached colour" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optColorPale">Pale / bleached colour</div>
+                  <div class="option-tile-sub">Very mature, low carotene, weathered</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>👃</span> <span data-i18n="qOdor">What does the silage smell like?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qOdorHint">Good fermentation smells clean and pleasantly sour (lactic acid).</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_odor" value="Pleasant, mildly acidic / fruity / yogurt-like (clean lactic)" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optOdorLactic">Pleasant, mildly acidic / fruity / yogurt-like (clean lactic)</div>
+                  <div class="option-tile-sub">Desired lactic fermentation aroma</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_odor" value="Sharp vinegar / pungent acetic smell" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optOdorAcetic">Sharp vinegar / pungent acetic smell</div>
+                  <div class="option-tile-sub">Excess acetic acid; may lower cow intake</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_odor" value="Foul, rotting, rancid butter / pungent ammonia smell" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optOdorButyric">Foul, rotting, rancid butter / pungent ammonia smell</div>
+                  <div class="option-tile-sub">Clostridia/butyric spoil; risk of cow refusal & ketosis</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_odor" value="Musty, stale, mouldy cellar smell" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optOdorMusty">Musty, stale, mouldy cellar smell</div>
+                  <div class="option-tile-sub">Fungal deterioration; air exposure</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>🌡️</span> <span data-i18n="qWarmth">How does the silage feel inside when touched?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qWarmthHint">Silage should feel cool; warmth indicates ongoing aerobic spoilage.</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_warmth" value="Cool or normal ambient temperature" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optWarmthCool">Cool or normal ambient temperature</div>
+                  <div class="option-tile-sub">Normal anaerobic stability</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_warmth" value="Warm to touch (mild heating)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optWarmthWarm">Warm to touch (mild heating)</div>
+                  <div class="option-tile-sub">Air is leaking in; active yeast heating</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_warmth" value="Hot or steaming (severe aerobic heating)" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optWarmthHot">Hot or steaming (severe aerobic heating)</div>
+                  <div class="option-tile-sub">&gt;40°C; severe nutrient burnout</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_warmth" value="Unknown" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optWarmthUnknown">I don't know</div>
+                  <div class="option-tile-sub">Have not touched interior</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- STEP 4: LAB REPORT & OPTIONAL TOOLS -->
+        <div class="wizard-step-panel" data-step="4" style="display: none;">
+          
+          <div class="question-block">
+            <h3 class="question-title">
+              <span>🧪</span> <span data-i18n="qLabReport">Do you have a certified laboratory test report?</span>
+            </h3>
+            <p class="question-hint" data-i18n="qLabReportHint">Laboratory wet chemistry provides proximate numbers (CP, NDF, Ash, Starch).</p>
+            <div class="option-cards-grid">
+              <label class="option-tile selected">
+                <input type="radio" name="farmer_has_lab" value="no" class="option-tile-radio" checked>
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optLabNo">No — I do not have a laboratory report (Farmer Mode guidance)</div>
+                  <div class="option-tile-sub">Receive validated practical guidance based on observed field rules.</div>
+                </div>
+              </label>
+
+              <label class="option-tile">
+                <input type="radio" name="farmer_has_lab" value="yes" class="option-tile-radio">
+                <div class="option-tile-content">
+                  <div class="option-tile-label" data-i18n="optLabYes">Yes — I have laboratory measurements</div>
+                  <div class="option-tile-sub">You can also switch to Scientific FQI Mode to run the 11-feature ML model.</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px; margin-bottom: 20px;">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 12px;" data-i18n="optionalFieldTools">
+              Optional Field Measurements (if you have tools):
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
+              <div>
+                <label style="font-size: 0.82rem; font-weight: 600; display: block; margin-bottom: 4px;" data-i18n="phFieldLabel">
+                  Silage pH (pocket meter or test strip)
+                </label>
+                <input type="number" id="farmer_ph" class="form-control" step="0.1" placeholder="e.g. 3.9" min="2.5" max="10">
+              </div>
+
+              <div>
+                <label style="font-size: 0.82rem; font-weight: 600; display: block; margin-bottom: 4px;" data-i18n="moistureFieldLabel">
+                  Moisture % (dryer or squeeze estimate)
+                </label>
+                <input type="number" id="farmer_moisture" class="form-control" step="0.5" placeholder="e.g. 65.0" min="10" max="95">
+              </div>
+
+              <div>
+                <label style="font-size: 0.82rem; font-weight: 600; display: block; margin-bottom: 4px;" data-i18n="tempFieldLabel">
+                  Internal Temperature (°C with probe)
+                </label>
+                <input type="number" id="farmer_temp" class="form-control" step="0.5" placeholder="e.g. 26.0" min="0" max="75">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 18px;">
+            <label style="font-size: 0.84rem; font-weight: 700; display: block; margin-bottom: 6px;" data-i18n="notesFieldLabel">
+              Field Notes & Observations
+            </label>
+            <textarea id="farmer_notes" class="form-control" rows="2" style="height: auto; padding: 10px;" data-i18n-placeholder="notesPlaceholder" placeholder="e.g. Silo opened last week, cow herd size 8, slight rain during packing..."></textarea>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <input type="checkbox" id="farmer_save_sample" style="width: 18px; height: 18px; accent-color: var(--primary);" checked>
+            <label for="farmer_save_sample" style="font-size: 0.88rem; font-weight: 600; cursor: pointer;" data-i18n="saveToHistoryLabel">
+              Save this assessment to my dairy farm records (Sample History)
+            </label>
+          </div>
+
+        </div>
+
+        <!-- Wizard Navigation Actions Bar -->
+        <div class="wizard-actions-bar">
+          <div>
+            <button type="button" class="btn-wizard btn-wizard-prev" id="btn-wizard-prev" style="display: none;" data-i18n="btnPrev">
+              ⬅ Back
+            </button>
+            <button type="button" class="btn-wizard btn-wizard-cancel" id="btn-wizard-reset" data-i18n="btnStartAgain">
+              ↺ Start Again
+            </button>
+          </div>
+
+          <div>
+            <button type="button" class="btn-wizard btn-wizard-next" id="btn-wizard-next" data-i18n="btnNext">
+              Next Step ➜
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SECTION B: SCIENTIFIC FQI MODE (11 FEATURES, RESEARCH RF)      -->
+    <!-- ============================================================== -->
+    <section id="scientific-mode-section" class="card" style="padding: 32px; margin-bottom: 28px; display: none;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; border-bottom: 2px solid #f1f5f9; padding-bottom: 14px;">
+        <div>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>🔬</span> <span data-i18n="scientificModeTitle">Scientific FQI Prediction Mode</span>
+          </h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;" data-i18n="sciSubtitle">
+            Enter all 11 verified proximate and management parameters. All fields are required by the ML model.
+          </p>
+        </div>
+        <div>
+          <button type="button" class="preset-btn" id="btn-sci-fill-preset">
+            <span>✨</span> <span data-i18n="btnFillPreset">Fill Verified Sample</span>
+          </button>
+        </div>
+      </div>
+
+      <form id="scientific-fqi-form" novalidate>
+        
+        <!-- Group 1: 5 Fresh Nutritional Features -->
+        <div style="margin-bottom: 24px;">
+          <h3 style="font-size: 1rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 14px; display: flex; align-items: center; gap: 6px;" data-i18n="groupNutritional">
+            1. Fresh Nutritional Traits (% Dry Matter Basis)
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">
+                <span data-i18n="dmfLabel">Fresh Dry Matter (dm.f)</span>
+                <span class="help-icon" title="Percentage of dry matter in fresh crop before ensiling">?</span>
+              </label>
+              <input type="number" id="sci_dm_f" class="form-control" step="0.01" placeholder="e.g. 33.5" required>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="dmfHint">Whole-crop dry matter %</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">
+                <span data-i18n="cpfLabel">Crude Protein (cp.f)</span>
+                <span class="help-icon" title="Crude protein percentage of dry matter">?</span>
+              </label>
+              <input type="number" id="sci_cp_f" class="form-control" step="0.01" placeholder="e.g. 8.2" required>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="cpfHint">% of dry matter</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">
+                <span data-i18n="ashfLabel">Total Ash (ash.f)</span>
+                <span class="help-icon" title="Total mineral residue percentage of dry matter">?</span>
+              </label>
+              <input type="number" id="sci_ash_f" class="form-control" step="0.01" placeholder="e.g. 4.6" required>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="ashfHint">% mineral ash</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">
+                <span data-i18n="wscfLabel">Water-Soluble Carbs (wsc.f)</span>
+                <span class="help-icon" title="Water-soluble sugars that feed lactic bacteria">?</span>
+              </label>
+              <input type="number" id="sci_wsc_f" class="form-control" step="0.01" placeholder="e.g. 8.5" required>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="wscfHint">% sugars</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">
+                <span data-i18n="starchfLabel">Starch Content (starch.f)</span>
+                <span class="help-icon" title="Grain starch percentage of dry matter">?</span>
+              </label>
+              <input type="number" id="sci_starch_f" class="form-control" step="0.01" placeholder="e.g. 29.0" required>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="starchfHint">% starch</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 2: 6 Agronomic & Management Features -->
+        <div style="margin-bottom: 24px;">
+          <h3 style="font-size: 1rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 14px; display: flex; align-items: center; gap: 6px;" data-i18n="groupAgronomic">
+            2. Agronomic & Management Decisions
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;" data-i18n="methodLabel">
+                Silo Containment (method)
+              </label>
+              <select id="sci_method" class="form-control" required>
+                <option value="bags">bags (Silage bags / tube silos)</option>
+                <option value="buckets">buckets (Buckets / small trial drums)</option>
+              </select>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="methodHint">Trial containment structure</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;" data-i18n="inhoculantLabel">
+                Biological Inoculant (inhoculant)
+              </label>
+              <select id="sci_inhoculant" class="form-control" required>
+                <option value="ho">ho (Homofermentative culture, e.g. L. plantarum)</option>
+                <option value="he">he (Heterofermentative culture, e.g. L. buchneri)</option>
+                <option value="c">c (Control / water, no biological additive)</option>
+              </select>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="inhoculantHint">Biological additive type</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;" data-i18n="doseLabel">
+                Application Dosage (dose)
+              </label>
+              <select id="sci_dose" class="form-control" required>
+                <option value="s">s (Standard recommended dose)</option>
+                <option value="h">h (Half dose)</option>
+                <option value="d">d (Double dose)</option>
+                <option value="none">none (No dose / untreated)</option>
+                <option value="Unknown">Unknown</option>
+              </select>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="doseHint">Inoculant dosage</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;" data-i18n="delayLabel">
+                Sealing Delay (delay)
+              </label>
+              <select id="sci_delay" class="form-control" required>
+                <option value="D0">D0 (0 to 4 hours delay - immediate packing)</option>
+                <option value="D6">D6 (6 hours packing delay)</option>
+                <option value="D20">D20 (20 to 24 hours overnight packing delay)</option>
+              </select>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="delayHint">Chopping to sealing delay</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;" data-i18n="faoLabel">
+                FAO Maturity Class (fao.class)
+              </label>
+              <select id="sci_fao_class" class="form-control" required>
+                <option value="ea">ea (Early hybrid, ~200 FAO maturity)</option>
+                <option value="la">la (Late hybrid, ~600-700 FAO maturity)</option>
+                <option value="Unknown">Unknown</option>
+              </select>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="faoHint">Corn hybrid maturity</span>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;" data-i18n="maturityLabel">
+                Milk-Line Maturity (maturity)
+              </label>
+              <select id="sci_maturity" class="form-control" required>
+                <option value="mh">mh (Mid harvest - 2/3 milk line, optimal)</option>
+                <option value="eh">eh (Early harvest - 1/3 milk line)</option>
+                <option value="lh">lh (Late harvest - black layer / mature)</option>
+                <option value="vlh">vlh (Very late harvest)</option>
+              </select>
+              <span style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="maturityHint">Crop kernel maturity at harvest</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 14px; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; flex-wrap: wrap;">
+          <button type="submit" id="btn-sci-predict" class="btn-predict" data-i18n="btnPredictFQI">
+            <span>🔬</span> Run Scientific FQI Prediction
+          </button>
+          <button type="button" id="btn-sci-reset" class="btn-reset" data-i18n="btnClear">
+            Clear Fields
+          </button>
+        </div>
+
+      </form>
+
+    </section>
+
+    <!-- Loading Indicator Panel -->
+    <div id="app-loading-state" style="display: none; text-align: center; padding: 32px; margin-bottom: 20px;">
+      <div class="spinner" style="margin: 0 auto 12px;"></div>
+      <div id="app-loading-msg" style="font-weight: 700; color: var(--primary);">
+        Processing request...
+      </div>
+    </div>
+
+    <!-- Error Alert Box -->
+    <div id="app-error-box" class="error-card" style="display: none; margin-bottom: 24px;" role="alert">
+      <div class="error-card-header">
+        <span>⚠️</span>
+        <span id="app-error-title">Notice</span>
+      </div>
+      <p id="app-error-message">An issue occurred.</p>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- RESULT PANEL A: FARMER MODE RESULTS DOSSIER                    -->
+    <!-- ============================================================== -->
+    <section id="farmer-result-panel" class="card" style="display: none; padding: 32px; margin-bottom: 28px;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 14px;">
+        <div>
+          <span class="pill-status" style="background: #dcfce7; color: #15803d; margin-bottom: 6px;" data-i18n="farmerModeBadge">
+            Farmer Friendly • No Lab Test Needed
+          </span>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-main);" data-i18n="resFarmerHeading">
+            Farmer Silage Screening Dossier
+          </h2>
+        </div>
+        <div>
+          <button type="button" onclick="window.print()" class="preset-btn" title="Print this report">
+            <span>🖨️</span> Print / Save Dossier
+          </button>
+        </div>
+      </div>
+
+      <!-- Saved Notice -->
+      <div id="farmer-saved-notice" style="display: none; background: #ecfdf5; border: 1.5px solid #a7f3d0; border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 20px; font-size: 0.9rem; color: #065f46;">
+      </div>
+
+      <!-- Important Non-ML Safety Notice -->
+      <div class="prototype-disclaimer-box">
+        <h4 data-i18n="resDisclaimerHeading">Important Health & Scientific Notice</h4>
+        <p id="farmer-disclaimer-text" data-i18n="resDisclaimerBody">
+          This preliminary guidance is based on validated dairy extension rules (ICAR-NDRI) and observable field indicators. It is NOT an ML-generated FQI prediction or a certified laboratory diagnosis. Appearance and smell alone CANNOT establish that silage is safe for animal consumption (e.g. microscopic mycotoxins or subclinical bacterial spores cannot be detected by eye or nose alone).
+        </p>
+      </div>
+
+      <!-- Summary of Farmer's Answers -->
+      <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px; margin-bottom: 22px;">
+        <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;" data-i18n="resSummaryHeading">
+          Summary of Your Silage Inputs
+        </h3>
+        <div id="farmer-summary-content"></div>
+      </div>
+
+      <!-- Observed Warning Signs -->
+      <div style="margin-bottom: 24px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px;" data-i18n="resWarningTitle">
+          🔍 Observed Silage Warning Signs
+        </h3>
+        <div id="farmer-warnings-list" class="warning-signs-list"></div>
+      </div>
+
+      <!-- Practical Farm Guidance -->
+      <div style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: var(--radius-md); padding: 22px; margin-bottom: 24px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #166534; margin-bottom: 14px;" data-i18n="resGuidanceTitle">
+          🚜 Practical Dairy Farm Guidance
+        </h3>
+        <div id="farmer-guidance-list"></div>
+      </div>
+
+      <!-- Laboratory Referral Advisory -->
+      <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); padding: 20px;">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: #1e40af; margin-bottom: 8px;" data-i18n="resLabAdvisoryTitle">
+          🧪 Certified Laboratory Advisory
+        </h3>
+        <div id="farmer-lab-advisory-content"></div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- RESULT PANEL B: SCIENTIFIC FQI MODE RESULTS PANEL              -->
+    <!-- ============================================================== -->
+    <section id="scientific-result-panel" class="card" style="display: none; padding: 32px; margin-bottom: 28px;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 14px;">
+        <div>
+          <span class="pill-status" style="background: #e0f2fe; color: #0369a1; margin-bottom: 6px;" data-i18n="scientificModeBadge">
+            For Lab Analysts & Field Officers
+          </span>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-main);" data-i18n="resSciHeading">
+            Scientific FQI Regression Output
+          </h2>
+        </div>
+        <div>
+          <button type="button" onclick="window.print()" class="preset-btn" title="Print this report">
+            <span>🖨️</span> Print Output
+          </button>
+        </div>
+      </div>
+
+      <!-- Prominent Predicted FQI Display (Continuous Score, Zero Invented Tiers) -->
+      <div class="sci-fqi-card">
+        <div style="font-size: 0.88rem; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;" data-i18n="resFqiScoreLabel">
+          Predicted Fermentation Quality Index (FQI)
+        </div>
+        <div class="sci-fqi-number" id="sci-fqi-value">--</div>
+        <div class="sci-fqi-scale">Continuous Regression Scale (11.66 to 84.57) • Random Forest Model</div>
+      </div>
+
+      <!-- Scientific Padova Formula Explanation -->
+      <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px; margin-bottom: 20px;">
+        <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">
+          What the FQI Number Represents
+        </h4>
+        <p style="font-size: 0.84rem; color: #475569; line-height: 1.5;">
+          The Fermentation Quality Index (FQI) is a continuous score formulated by agricultural researchers (University of Padova) to evaluate the completeness of anaerobic preservation. It is mathematically derived from volatile fatty acids (lactic, acetic, propionic, butyric), pH, and ammonia nitrogen (NH₃-N / Total N). Higher numerical values reflect predominantly lactic acid preservation with minimal protein breakdown.
+        </p>
+      </div>
+
+      <!-- Research Model Limitations & Disclaimer -->
+      <div class="prototype-disclaimer-box">
+        <h4 data-i18n="resSciDisclaimerHeading">Model Limitations & Research Disclaimer</h4>
+        <p id="sci-disclaimer-text" data-i18n="resSciDisclaimerBody">
+          RESEARCH PROTOTYPE: This Random Forest regression model (n_estimators=500, max_depth=10) was trained on 1,486 research trial observations from the University of Padova. Under rigorous 5-fold Leave-One-Trial-Out cross-validation (GroupKFold on ref.trial), its average out-of-trial R² remained negative (-0.580 ± 1.068, MAE = 9.51), reflecting biological domain shifts between research campaigns. The model has NOT been calibrated on Indian fodder cultivars or tropical agro-climatic zones. In compliance with scientific integrity, no artificial accuracy percentages or Good/Moderate/Poor tiers were invented. This prediction does NOT prove silage is safe for animal feeding.
+        </p>
+      </div>
+
+      <!-- Table of 11 Features Used -->
+      <div>
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px;" data-i18n="resSciInputsHeading">
+          Exact 11 Verified Features Used for Inference
+        </h3>
+        <div class="data-table-container">
+          <table class="indicators-table">
+            <thead>
+              <tr>
+                <th>Feature Name</th>
+                <th>Value Submitted</th>
+              </tr>
+            </thead>
+            <tbody id="sci-inputs-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.82rem;">
+      <p data-i18n="footerText">SmartSilageAI • SIH26111 • Ministry of Fisheries, Animal Husbandry & Dairying</p>
+      <p style="margin-top: 4px;" data-i18n="footerDiscl">
+        For research and decision support. Consult local veterinarians and accredited dairy nutritionists for clinical ration formulation.
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="/static/js/api.js?v=2.1"></script>
+  <script src="/static/js/i18n.js?v=2.1"></script>
+  <script src="/static/js/farmer_ux.js?v=2.1"></script>
+  <script src="/static/js/auth.js?v=2.1"></script>
+</body>
+</html>

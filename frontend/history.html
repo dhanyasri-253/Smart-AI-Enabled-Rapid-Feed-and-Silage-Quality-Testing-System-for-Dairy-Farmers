@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sample History & Archives — SmartSilageAI (SIH26111)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top SIH Banner with Language Toggle -->
+  <div class="sih-badge-banner">
+    <div><strong>SIH26111:</strong> <span data-i18n="topHeader">Rapid Silage & Feed Quality System for Dairy Farmers</span></div>
+    <div class="banner-right">
+      <button type="button" class="lang-toggle-btn" id="history-lang-btn" onclick="I18N.toggleLanguage()">
+        <span>🇮🇳</span> <span>தமிழ்</span>
+      </button>
+      <span class="pill-status">Archives & History</span>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title" data-i18n="brandTitle">SmartSilageAI</span>
+          <span class="brand-sub">Sample Archives</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link" data-i18n="navHome">🏠 Home</a></li>
+        <li><a href="/sample.html" class="nav-link" data-i18n="navNewTest">🧪 Test Silage</a></li>
+        <li><a href="/dashboard.html" class="nav-link" data-i18n="navDashboard">📊 Dashboard</a></li>
+        <li><a href="/history.html" class="nav-link active" data-i18n="navHistory">📋 History</a></li>
+        <li><a href="/admin.html" class="nav-link" data-i18n="navAdmin">⚙️ Admin / Jury</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+      <div>
+        <h1 style="font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+          📋 Sample Testing History
+        </h1>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Inspect all recorded silage pits, forage harvests, and concentrate feed screenings
+        </p>
+      </div>
+
+      <a href="/sample.html" class="btn btn-primary">
+        ➕ New Sample Test
+      </a>
+    </div>
+
+    <!-- Filter and Search Toolbar -->
+    <div class="card" style="padding: 16px; margin-bottom: 20px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; align-items: center;">
+        
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">
+            SEARCH BY ID OR NOTES
+          </label>
+          <input type="text" id="search-input" placeholder="🔍 Search e.g. SMP-2026, bunker, rain...">
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">
+            FILTER BY CROP TYPE
+          </label>
+          <select id="type-filter">
+            <option value="All">All Sample Types</option>
+            <option value="Corn Silage">Corn Silage</option>
+            <option value="Sorghum Silage">Sorghum Silage</option>
+            <option value="Mixed Grass Silage">Mixed Grass Silage</option>
+            <option value="Green Fodder (Napier/Berseem)">Green Fodder</option>
+            <option value="Dry Fodder / Hay">Dry Fodder / Hay</option>
+            <option value="Concentrate Feed">Concentrate Feed</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 18px;">
+          <input type="checkbox" id="attention-filter" style="width: auto;">
+          <label for="attention-filter" style="font-size: 0.85rem; font-weight: 600; cursor: pointer;">
+            ⚠️ Show only samples requiring attention
+          </label>
+        </div>
+
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);">
+        <span id="history-count" style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">
+          Loading samples...
+        </span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">
+          Click any row to open the complete explainable assessment report
+        </span>
+      </div>
+    </div>
+
+    <!-- History Table Card -->
+    <div class="card">
+      <div id="history-loading" style="text-align: center; padding: 24px; color: var(--text-muted);">
+        ⏳ Loading sample records...
+      </div>
+
+      <div class="data-table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Sample Code</th>
+              <th>Crop Type</th>
+              <th>Sample Date</th>
+              <th>Field Measurements</th>
+              <th>Screening Status</th>
+              <th>Score</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-sih-note">
+        <strong>SIH26111: Rapid Silage & Feed Quality System</strong><br>
+        Department of Animal Husbandry & Dairying
+      </div>
+      <div><a href="/admin.html" style="color:#94a3b8; font-size:0.8rem;">Technical Status</a></div>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/history.js"></script>
+</body>
+</html>
+

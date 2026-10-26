@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Registration — SmartSilageAI (SIH26111)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <div class="sih-badge-banner">
+    <div><strong>SIH26111:</strong> Rapid Silage & Feed Quality System for Dairy Farmers</div>
+    <div class="banner-right"><span class="pill-status">New Registration</span></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title">SmartSilageAI</span>
+          <span class="brand-sub">Farmer Access</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/sample.html" class="nav-link">Test New Sample</a></li>
+        <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="/history.html" class="nav-link">History</a></li>
+        <li><a href="/login.html" class="nav-link">Farmer Login</a></li>
+        <li><a href="/register.html" class="nav-link active">Register</a></li>
+        <li><a href="/admin.html" class="nav-link">Admin / Jury View</a></li>
+        <li><a href="/docs" class="nav-link" target="_blank">Docs</a></li>
+        <li><a href="/redoc" class="nav-link" target="_blank">ReDoc</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-narrow" style="margin-top: 24px;">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">📝 Register Dairy Farmer Profile</h2>
+          <p class="card-subtitle">Connect your dairy cattle herd to record forage tests & feed monitoring</p>
+        </div>
+      </div>
+
+      <div id="register-alert" class="alert" style="display: none;"></div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label" for="name">Farmer / Farm Name *</label>
+          <input type="text" id="name" placeholder="e.g. Ramesh Patel" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="mobile">Mobile Number *</label>
+          <input type="text" id="mobile" placeholder="e.g. 9876543210" required>
+          <span class="help-text">Used as your unique login ID</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="location">Location / District</label>
+            <input type="text" id="location" placeholder="e.g. Anand, Gujarat">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address (Optional)</label>
+            <input type="email" id="email" placeholder="e.g. ramesh@example.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Create Password *</label>
+          <input type="password" id="password" placeholder="At least 4 characters" required minlength="4">
+        </div>
+
+        <div style="margin-top: 24px;">
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-block btn-lg">
+            Complete Farmer Registration
+          </button>
+        </div>
+
+        <div style="margin-top: 18px; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+          Already have an account? 
+          <a href="/login.html" style="font-weight: 600;">Sign in here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-sih-note">
+        <strong>SIH26111: Smart AI-Enabled Rapid Silage Quality System</strong>
+      </div>
+      <div><a href="/admin.html" style="color:#94a3b8; font-size:0.8rem;">Technical Status</a></div>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+</body>
+</html>
